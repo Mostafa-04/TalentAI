@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('briefs', function (Blueprint $table) {
-           $table->id();
+            $table->id();
             $table->unsignedBigInteger('created_by');
             $table->string('title');
             $table->string('sector');
@@ -27,8 +27,8 @@ return new class extends Migration
             $table->enum('status', ['draft', 'active', 'sourcing', 'interviews', 'closed']);
             $table->softDeletes();
             $table->foreign('created_by')
-                  ->references('id')
-                  ->on('users');
+                ->references('id')
+                ->on('users');
             $table->timestamps();
         });
     }

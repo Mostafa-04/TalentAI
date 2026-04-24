@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Candidat extends Model
 {
     use SoftDeletes;
+
     protected $table = 'candidats';
 
     protected $fillable = [
@@ -21,10 +23,9 @@ class Candidat extends Model
         'source',
         'source_url',
         'status',
-        
+
     ];
 
-    
     /**
      * Get the attributes that should be cast.
      *
@@ -36,5 +37,4 @@ class Candidat extends Model
             'experience_years' => 'integer',
         ];
     }
-    
 }
