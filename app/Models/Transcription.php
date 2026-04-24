@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Transcription extends Model
 {
     use SoftDeletes;
+
     protected $table = 'transcriptions';
 
     protected $fillable = [
@@ -17,6 +19,7 @@ class Transcription extends Model
         'progress_pct',
         'created_at',
     ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -26,17 +29,10 @@ class Transcription extends Model
     {
         return [
             'whisper_confidence' => 'float',
-        'progress_pct' => 'integer',
-        'created_at' => 'datetime',
+            'progress_pct' => 'integer',
+            'created_at' => 'datetime',
         ];
     }
-    
-
-    /*
-    |--------------------------------
-    | Relationship
-    |--------------------------------
-    */
 
     public function interview()
     {

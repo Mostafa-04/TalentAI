@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class ActivityLog extends Model
 {
     use SoftDeletes;
+
     protected $table = 'activity_logs';
 
     protected $fillable = [
@@ -16,10 +18,9 @@ class ActivityLog extends Model
         'action',
         'metadata',
         'created_at',
-       
+
     ];
 
-    
     /**
      * Get the attributes that should be cast.
      *
@@ -32,12 +33,6 @@ class ActivityLog extends Model
             'created_at' => 'datetime',
         ];
     }
-
-    /*
-    |--------------------------------
-    | Relationship
-    |--------------------------------
-    */
 
     public function user()
     {

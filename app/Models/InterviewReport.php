@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class InterviewReport extends Model
 {
     use SoftDeletes;
+
     protected $table = 'interview_reports';
-
-    
-
 
     protected $fillable = [
         'interview_id',
@@ -31,7 +30,6 @@ class InterviewReport extends Model
         'generated_at',
     ];
 
-    
     /**
      * Get the attributes that should be cast.
      *
@@ -41,14 +39,9 @@ class InterviewReport extends Model
     {
         return [
             'key_excerpts' => 'array',
-        'generated_at' => 'datetime',
+            'generated_at' => 'datetime',
         ];
     }
-    /*
-    |--------------------------------
-    | Relationships
-    |--------------------------------
-    */
 
     public function interview()
     {

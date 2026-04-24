@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Interview extends Model
 {
     use SoftDeletes;
-    protected $table = 'interviews';
 
+    protected $table = 'interviews';
 
     protected $fillable = [
         'candidate_id',
@@ -27,6 +28,7 @@ class Interview extends Model
         'completed_at' => 'datetime',
         'duration_seconds' => 'integer',
     ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -40,11 +42,6 @@ class Interview extends Model
             'duration_seconds' => 'integer',
         ];
     }
-    /*
-    |--------------------------------
-    | Relationships
-    |--------------------------------
-    */
 
     public function candidate()
     {

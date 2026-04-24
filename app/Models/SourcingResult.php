@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class SourcingResult extends Model
 {
     use SoftDeletes;
+
     protected $table = 'sourcing_results';
-
-    
-
-    
 
     protected $fillable = [
         'brief_id',
@@ -24,7 +22,6 @@ class SourcingResult extends Model
         'sourced_at',
     ];
 
-    
     /**
      * Get the attributes that should be cast.
      *
@@ -38,11 +35,6 @@ class SourcingResult extends Model
             'sourced_at' => 'datetime',
         ];
     }
-    /*
-    |--------------------------------
-    | Relationships
-    |--------------------------------
-    */
 
     public function brief()
     {

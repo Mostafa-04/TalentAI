@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Integration extends Model
 {
     use SoftDeletes;
+
     protected $table = 'integrations';
 
     protected $fillable = [
@@ -19,6 +21,7 @@ class Integration extends Model
         'active',
         'created_at',
     ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -27,20 +30,13 @@ class Integration extends Model
     protected function casts(): array
     {
         return [
-             'active' => 'boolean',
+            'active' => 'boolean',
             'credits_used' => 'integer',
             'credits_limit' => 'integer',
             'token_expires_at' => 'datetime',
             'created_at' => 'datetime',
         ];
     }
-    
-
-    /*
-    |--------------------------------
-    | Relationship
-    |--------------------------------
-    */
 
     public function user()
     {

@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class CvAnalysis extends Model
-{   
+{
     use SoftDeletes;
+
     protected $table = 'cv_analyses';
 
     protected $fillable = [
@@ -24,7 +26,6 @@ class CvAnalysis extends Model
         'analyzed_at',
     ];
 
-    
     /**
      * Get the attributes that should be cast.
      *
@@ -33,16 +34,10 @@ class CvAnalysis extends Model
     protected function casts(): array
     {
         return [
-             'ai_tags' => 'array',
-            'analyzed_at' => 'datetime'
+            'ai_tags' => 'array',
+            'analyzed_at' => 'datetime',
         ];
     }
-
-    /*
-    |-----------------------------
-    | Relationships
-    |-----------------------------
-    */
 
     public function candidate()
     {
@@ -53,5 +48,4 @@ class CvAnalysis extends Model
     {
         return $this->belongsTo(Brief::class, 'brief_id');
     }
-
 }

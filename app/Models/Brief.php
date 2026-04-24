@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Brief extends Model
-{   
+{
     use SoftDeletes;
+
     protected $table = 'briefs';
 
     protected $fillable = [
@@ -25,7 +27,7 @@ class Brief extends Model
         'soft_skills',
         'scoring_weights',
         'status',
-       
+
     ];
 
     /**
@@ -41,9 +43,6 @@ class Brief extends Model
         ];
     }
 
-    /**
-     * Relationship: Brief belongs to User
-     */
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
