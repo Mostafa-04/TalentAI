@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('sourcing_results', function (Blueprint $table) {
@@ -30,17 +27,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('candidats');
 
-            $table->index(['brief_id', 'candidate_id']);
-            $table->index('ai_score');
-            $table->index('retained');
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('sourcing_results');

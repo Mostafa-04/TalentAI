@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('integrations', function (Blueprint $table) {
@@ -22,7 +19,7 @@ return new class extends Migration
                 'facebook',
                 'whisper',
                 'claude',
-                'google_calendar'
+                'google_calendar',
             ]);
 
             $table->text('api_token');
@@ -35,23 +32,15 @@ return new class extends Migration
 
             $table->boolean('active')->default(true);
 
-            // Foreign key
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
-                ;
+                ->on('users');
 
-            // Indexes (important for SaaS + billing + monitoring)
-            $table->index(['user_id', 'provider']);
-            $table->index('active');
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('integrations');

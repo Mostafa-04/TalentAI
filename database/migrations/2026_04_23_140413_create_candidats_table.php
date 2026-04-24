@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('candidats', function (Blueprint $table) {
@@ -26,7 +23,7 @@ return new class extends Migration
                 'indeed',
                 'facebook',
                 'manual',
-                'cv_upload'
+                'cv_upload',
             ]);
             $table->string('source_url')->nullable();
             $table->enum('status', [
@@ -35,16 +32,13 @@ return new class extends Migration
                 'interview',
                 'recommended',
                 'offer',
-                'rejected'
+                'rejected',
             ]);
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('candidats');

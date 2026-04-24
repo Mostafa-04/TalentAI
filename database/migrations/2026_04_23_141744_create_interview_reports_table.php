@@ -6,13 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('interview_reports', function (Blueprint $table) {
-           $table->id();
+            $table->id();
 
             $table->unsignedBigInteger('interview_id');
 
@@ -44,14 +41,13 @@ return new class extends Migration
                 'recommended',
                 'solid',
                 'to_deepen',
-                'rejected'
+                'rejected',
             ]);
 
             $table->text('ai_recommendation');
 
             $table->timestamp('generated_at');
 
-            // Foreign keys
             $table->foreign('interview_id')
                 ->references('id')
                 ->on('interviews');
@@ -64,17 +60,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('briefs');
 
-            // Performance indexes (important for filtering dashboards)
-            $table->index(['brief_id', 'verdict']);
-            $table->index('score_global');
             $table->softDeletes();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('interview_reports');

@@ -6,13 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('interviews', function (Blueprint $table) {
-           $table->id();
+            $table->id();
 
             $table->unsignedBigInteger('candidate_id');
 
@@ -31,7 +28,7 @@ return new class extends Migration
                 'recording_uploaded',
                 'transcribing',
                 'analyzed',
-                'done'
+                'done',
             ]);
 
             $table->timestamp('scheduled_at')->nullable();
@@ -40,7 +37,7 @@ return new class extends Migration
 
             $table->foreign('candidate_id')
                 ->references('id')
-                ->on('candidats') ;
+                ->on('candidats');
 
             $table->foreign('brief_id')
                 ->references('id')
@@ -50,15 +47,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('users');
 
-            $table->index(['status', 'scheduled_at']);
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('interviews');
