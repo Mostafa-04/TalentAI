@@ -10,4 +10,9 @@ class AppController extends Controller
     {
         dd();
     }
+
+    public function edit()
+    {
+        dd();
+    }
 }
