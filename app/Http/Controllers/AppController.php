@@ -13,6 +13,6 @@ class AppController extends Controller
 
     public function edit()
     {
-        dd();
+        dd('edit');
     }
 }
