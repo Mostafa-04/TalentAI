@@ -3,38 +3,46 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ActivityLog extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'activity_logs';
+
+    public $timestamps = false;
 
     protected $fillable = [
         'user_id',
-        'entity_type',
-        'entity_id',
+        'user_name',
+        'user_email',
+        'user_role',
+        'is_authenticated',
         'action',
-        'metadata',
-        'created_at',
-
+        'description',
+        'controller',
+        'controller_method',
+        'http_method',
+        'url',
+        'ip_address',
+        'user_agent',
+        'request_data',
+        'models',
+        'properties',
+        'logged_at',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
-            'metadata' => 'array',
-            'created_at' => 'datetime',
+            'is_authenticated' => 'boolean',
+            'request_data' => 'array',
+            'models' => 'array',
+            'properties' => 'array',
+            'logged_at' => 'datetime',
         ];
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
