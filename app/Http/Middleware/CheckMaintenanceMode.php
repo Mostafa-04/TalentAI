@@ -15,7 +15,7 @@ class CheckMaintenanceMode
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (env('APP_MAINTENANCE', false)) {
+        if (config('app.app_maintenance')) {
             return response()->view('maintenance');
         }
 
