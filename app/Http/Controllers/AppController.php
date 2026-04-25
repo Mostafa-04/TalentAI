@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 
 class AppController extends Controller
 {
+    public function index()
+    {
+        dd('edit');
+    }
+
     public function create()
     {
         dd();
