@@ -4,6 +4,7 @@
 #
 # One-time setup script every developer runs after cloning the repo.
 # Works on Linux, macOS, WSL, and Git Bash (Windows).
+# Detects Husky automatically and installs into the correct location.
 #
 # Usage:
 #   bash setup-hooks.sh
@@ -12,8 +13,6 @@
 set -e
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-HOOKS_DIR="$REPO_ROOT/.git/hooks"
-TEMPLATES_DIR="$REPO_ROOT/hooks"
 
 echo ""
 echo "┌─────────────────────────────────────────────┐"
@@ -21,14 +20,14 @@ echo "│   TalentAI · Developer Hook Setup           │"
 echo "└─────────────────────────────────────────────┘"
 echo ""
 
-# 1. Resolve php binary path — hooks run in a minimal environment that may
+# 1. Resolve php binary — hooks run in a minimal environment that may
 #    not inherit the developer's full PATH (common on Windows / Git Bash).
 PHP_BIN="$(command -v php 2>/dev/null || true)"
 if [ -z "$PHP_BIN" ]; then
-    echo "  ✖  php binary not found in PATH. Make sure PHP is installed and on your PATH."
+    echo "  ✖  php binary not found in PATH."
+    echo "     See PHPCS_SETUP.md § 1 for instructions on adding PHP to your bash PATH."
     exit 1
 fi
-PHP_DIR="$(dirname "$PHP_BIN")"
 echo "  ✔  php found at: $PHP_BIN"
 
 # 2. Verify phpcs is installed globally
@@ -40,40 +39,46 @@ else
     echo "  ✔  phpcs already available: $(phpcs --version)"
 fi
 
-PHPCS_BIN="$(command -v phpcs)"
-PHPCS_DIR="$(dirname "$PHPCS_BIN")"
+# 3. Detect whether Husky is managing hooks
+HUSKY_HOOKS_PATH="$(git config core.hooksPath 2>/dev/null || true)"
+HUSKY_PREPUSH="$REPO_ROOT/.husky/pre-push"
 
-# 3. Build a PATH line that includes both php and phpcs directories.
-#    Written into each installed hook so they work in any shell environment.
-HOOK_PATH_LINE="export PATH=\"$PHP_DIR:$PHPCS_DIR:\$PATH\""
+if [ -n "$HUSKY_HOOKS_PATH" ] && [ -f "$HUSKY_PREPUSH" ]; then
+    echo ""
+    echo "  Husky detected (core.hooksPath = $HUSKY_HOOKS_PATH)."
+    echo "  Controller quality check is already embedded in .husky/pre-push."
+    echo "  ✔  No additional hook installation needed."
+else
+    # No Husky — install directly into .git/hooks/
+    HOOKS_DIR="$REPO_ROOT/.git/hooks"
+    TEMPLATES_DIR="$REPO_ROOT/hooks"
+    PHP_DIR="$(dirname "$PHP_BIN")"
+    PHPCS_BIN="$(command -v phpcs)"
+    PHPCS_DIR="$(dirname "$PHPCS_BIN")"
+    HOOK_PATH_LINE="export PATH=\"$PHP_DIR:$PHPCS_DIR:\$PATH\""
 
-install_hook() {
-    local template="$1"
-    local dest="$2"
+    install_hook() {
+        local template="$1"
+        local dest="$2"
+        {
+            head -1 "$template"
+            echo "$HOOK_PATH_LINE"
+            tail -n +2 "$template"
+        } > "$dest"
+        chmod +x "$dest"
+    }
 
-    # Read template, inject PATH export as the second line (after the shebang)
-    {
-        head -1 "$template"                         # shebang
-        echo "$HOOK_PATH_LINE"                      # injected PATH
-        tail -n +2 "$template"                      # rest of the script
-    } > "$dest"
+    echo ""
+    echo "  Installing pre-push hook..."
+    install_hook "$TEMPLATES_DIR/pre-push.sh" "$HOOKS_DIR/pre-push"
+    echo "  ✔  .git/hooks/pre-push installed."
 
-    chmod +x "$dest"
-}
+    echo ""
+    echo "  Installing pre-merge-commit hook..."
+    install_hook "$TEMPLATES_DIR/pre-merge-commit.sh" "$HOOKS_DIR/pre-merge-commit"
+    echo "  ✔  .git/hooks/pre-merge-commit installed."
+fi
 
-# 4. Install pre-push hook
-echo ""
-echo "  Installing pre-push hook..."
-install_hook "$TEMPLATES_DIR/pre-push.sh" "$HOOKS_DIR/pre-push"
-echo "  ✔  .git/hooks/pre-push installed."
-
-# 5. Install pre-merge-commit hook
-echo ""
-echo "  Installing pre-merge-commit hook..."
-install_hook "$TEMPLATES_DIR/pre-merge-commit.sh" "$HOOKS_DIR/pre-merge-commit"
-echo "  ✔  .git/hooks/pre-merge-commit installed."
-
-# 6. Done
 echo ""
 echo "┌─────────────────────────────────────────────────────────────────┐"
 echo "│  Setup complete.                                                │"
