@@ -6,5 +6,8 @@ use App\Http\Controllers\Controller;
 
 class AppController extends Controller
 {
-    public function create() {}
+    public function create()
+    {
+        dd();
+    }
 }
