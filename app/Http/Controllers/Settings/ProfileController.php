@@ -32,12 +32,12 @@ class ProfileController extends Controller
 
             return Inertia::render('settings/profile', [
                 'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-                'status'          => $request->session()->get('status'),
+                'status' => $request->session()->get('status'),
             ]);
         } catch (\Throwable $e) {
             $logger->log(
                 'settings.profile.edit.error',
-                'Erreur lors de l\'affichage du profil : ' . $e->getMessage(),
+                'Erreur lors de l\'affichage du profil : '.$e->getMessage(),
                 ['user_id' => $request->user()?->id, 'exception' => $e->getMessage()]
             );
 
@@ -68,7 +68,7 @@ class ProfileController extends Controller
                 'settings.profile.update',
                 'Profil mis à jour avec succès.',
                 [
-                    'user_id'       => $request->user()->id,
+                    'user_id' => $request->user()->id,
                     'email_changed' => $emailChanged,
                 ]
             );
@@ -79,7 +79,7 @@ class ProfileController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'settings.profile.update.error',
-                'Erreur lors de la mise à jour du profil : ' . $e->getMessage(),
+                'Erreur lors de la mise à jour du profil : '.$e->getMessage(),
                 ['user_id' => $request->user()?->id, 'exception' => $e->getMessage()]
             );
 
@@ -100,9 +100,9 @@ class ProfileController extends Controller
                 'password' => ['required', 'current_password'],
             ]);
 
-            $user   = $request->user();
+            $user = $request->user();
             $userId = $user->id;
-            $email  = $user->email;
+            $email = $user->email;
 
             Auth::logout();
             $user->delete();
@@ -122,7 +122,7 @@ class ProfileController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'settings.profile.destroy.error',
-                'Erreur lors de la suppression du compte : ' . $e->getMessage(),
+                'Erreur lors de la suppression du compte : '.$e->getMessage(),
                 ['user_id' => $request->user()?->id, 'exception' => $e->getMessage()]
             );
 

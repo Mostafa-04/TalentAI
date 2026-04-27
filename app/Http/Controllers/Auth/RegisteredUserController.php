@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'user.register.create.error',
-                'Erreur lors de l\'affichage de la page d\'inscription : ' . $e->getMessage(),
+                'Erreur lors de l\'affichage de la page d\'inscription : '.$e->getMessage(),
                 ['exception' => $e->getMessage()]
             );
 
@@ -55,14 +55,14 @@ class RegisteredUserController extends Controller
 
         try {
             $request->validate([
-                'name'     => 'required|string|max:255',
-                'email'    => 'required|string|lowercase|email|max:255|unique:' . User::class,
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
             $user = User::create([
-                'name'     => $request->name,
-                'email'    => $request->email,
+                'name' => $request->name,
+                'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -83,7 +83,7 @@ class RegisteredUserController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'user.register.store.error',
-                'Erreur lors de l\'inscription : ' . $e->getMessage(),
+                'Erreur lors de l\'inscription : '.$e->getMessage(),
                 ['email' => $request->email, 'exception' => $e->getMessage()],
                 [User::class]
             );

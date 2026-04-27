@@ -31,7 +31,7 @@ class ConfirmablePasswordController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'password.confirm.show.error',
-                'Erreur lors de l\'affichage de la page de confirmation : ' . $e->getMessage(),
+                'Erreur lors de l\'affichage de la page de confirmation : '.$e->getMessage(),
                 ['exception' => $e->getMessage()]
             );
 
@@ -49,7 +49,7 @@ class ConfirmablePasswordController extends Controller
 
         try {
             if (! Auth::guard('web')->validate([
-                'email'    => $request->user()->email,
+                'email' => $request->user()->email,
                 'password' => $request->password,
             ])) {
                 $logger->log(
@@ -77,7 +77,7 @@ class ConfirmablePasswordController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'password.confirm.store.error',
-                'Erreur lors de la confirmation du mot de passe : ' . $e->getMessage(),
+                'Erreur lors de la confirmation du mot de passe : '.$e->getMessage(),
                 ['exception' => $e->getMessage()]
             );
 

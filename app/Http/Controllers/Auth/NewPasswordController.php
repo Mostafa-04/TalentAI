@@ -39,7 +39,7 @@ class NewPasswordController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'password.new.create.error',
-                'Erreur lors de l\'affichage de la page de réinitialisation : ' . $e->getMessage(),
+                'Erreur lors de l\'affichage de la page de réinitialisation : '.$e->getMessage(),
                 ['exception' => $e->getMessage()]
             );
 
@@ -59,8 +59,8 @@ class NewPasswordController extends Controller
 
         try {
             $request->validate([
-                'token'    => 'required',
-                'email'    => 'required|email',
+                'token' => 'required',
+                'email' => 'required|email',
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
@@ -68,7 +68,7 @@ class NewPasswordController extends Controller
                 $request->only('email', 'password', 'password_confirmation', 'token'),
                 function ($user) use ($request) {
                     $user->forceFill([
-                        'password'       => Hash::make($request->password),
+                        'password' => Hash::make($request->password),
                         'remember_token' => Str::random(60),
                     ])->save();
 
@@ -100,7 +100,7 @@ class NewPasswordController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'password.new.store.error',
-                'Erreur lors de la réinitialisation du mot de passe : ' . $e->getMessage(),
+                'Erreur lors de la réinitialisation du mot de passe : '.$e->getMessage(),
                 ['email' => $request->email, 'exception' => $e->getMessage()]
             );
 

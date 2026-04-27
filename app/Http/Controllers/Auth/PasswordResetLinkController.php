@@ -33,7 +33,7 @@ class PasswordResetLinkController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'password.reset_link.create.error',
-                'Erreur lors de l\'affichage de la page de réinitialisation : ' . $e->getMessage(),
+                'Erreur lors de l\'affichage de la page de réinitialisation : '.$e->getMessage(),
                 ['exception' => $e->getMessage()]
             );
 
@@ -70,7 +70,7 @@ class PasswordResetLinkController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'password.reset_link.store.error',
-                'Erreur lors de l\'envoi du lien de réinitialisation : ' . $e->getMessage(),
+                'Erreur lors de l\'envoi du lien de réinitialisation : '.$e->getMessage(),
                 ['email' => $request->email, 'exception' => $e->getMessage()]
             );
 

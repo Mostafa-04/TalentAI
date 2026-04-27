@@ -40,7 +40,7 @@ class EmailVerificationNotificationController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'email.verification.store.error',
-                'Erreur lors de l\'envoi du lien de vérification : ' . $e->getMessage(),
+                'Erreur lors de l\'envoi du lien de vérification : '.$e->getMessage(),
                 ['user_id' => $request->user()?->id, 'exception' => $e->getMessage()]
             );
 

@@ -30,12 +30,12 @@ class AuthenticatedSessionController extends Controller
 
             return Inertia::render('auth/login', [
                 'canResetPassword' => Route::has('password.request'),
-                'status'           => $request->session()->get('status'),
+                'status' => $request->session()->get('status'),
             ]);
         } catch (\Throwable $e) {
             $logger->log(
                 'session.create.error',
-                'Erreur lors de l\'affichage de la page de connexion : ' . $e->getMessage(),
+                'Erreur lors de l\'affichage de la page de connexion : '.$e->getMessage(),
                 ['exception' => $e->getMessage()]
             );
 
@@ -65,7 +65,7 @@ class AuthenticatedSessionController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'session.store.error',
-                'Erreur lors de la tentative de connexion : ' . $e->getMessage(),
+                'Erreur lors de la tentative de connexion : '.$e->getMessage(),
                 ['email' => $request->email, 'exception' => $e->getMessage()]
             );
 
@@ -96,7 +96,7 @@ class AuthenticatedSessionController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'session.destroy.error',
-                'Erreur lors de la déconnexion : ' . $e->getMessage(),
+                'Erreur lors de la déconnexion : '.$e->getMessage(),
                 ['exception' => $e->getMessage()]
             );
 

@@ -32,12 +32,12 @@ class PasswordController extends Controller
 
             return Inertia::render('settings/password', [
                 'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-                'status'          => $request->session()->get('status'),
+                'status' => $request->session()->get('status'),
             ]);
         } catch (\Throwable $e) {
             $logger->log(
                 'settings.password.edit.error',
-                'Erreur lors de l\'affichage des paramètres de mot de passe : ' . $e->getMessage(),
+                'Erreur lors de l\'affichage des paramètres de mot de passe : '.$e->getMessage(),
                 ['user_id' => $request->user()?->id, 'exception' => $e->getMessage()]
             );
 
@@ -56,7 +56,7 @@ class PasswordController extends Controller
         try {
             $validated = $request->validate([
                 'current_password' => ['required', 'current_password'],
-                'password'         => ['required', Password::defaults(), 'confirmed'],
+                'password' => ['required', Password::defaults(), 'confirmed'],
             ]);
 
             $request->user()->update([
@@ -75,7 +75,7 @@ class PasswordController extends Controller
         } catch (\Throwable $e) {
             $logger->log(
                 'settings.password.update.error',
-                'Erreur lors de la mise à jour du mot de passe : ' . $e->getMessage(),
+                'Erreur lors de la mise à jour du mot de passe : '.$e->getMessage(),
                 ['user_id' => $request->user()?->id, 'exception' => $e->getMessage()]
             );
 
