@@ -18,17 +18,10 @@ import {
 export default function Sidebar() {
   const { url } = usePage();
   const [collapsed, setCollapsed] = useState(false);
-  const [dark, setDark] = useState(false);
-  const isActive = (href) => url.startsWith(href);
+  const isActive = (href) => {
+    return url === href || url.startsWith(href + "/");
+  };
 
-  // DARK MODE INIT
-  useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    if (saved === "dark") {
-      document.documentElement.classList.add("dark");
-      setDark(true);
-    }
-  }, []);
 
   // MENU SECTIONS
   const sections = [
@@ -41,7 +34,7 @@ export default function Sidebar() {
     {
       title: "Sourcing",
       items: [
-        { id: "brief", label: "Nouveau brief", icon: FileText, href: "/brief" },
+        { id: "brief", label: "Nouveau brief", icon: FileText, href: "/briefs/create" },
         { id: "sourcing", label: "Sourcing auto", icon: Search, href: "/sourcing" },
       ],
     },
@@ -70,7 +63,7 @@ export default function Sidebar() {
   return (
     <aside
       className={`h-screen flex flex-col border-r transition-all duration-300
-      ${collapsed ? "w-[80px]" : "w-[240px]"}
+      ${collapsed ? "w-[90px]" : "w-[300px]"}
       bg-white text-gray-900 border-gray-200
       dark:bg-[#111118] dark:text-white dark:border-white/10`}
     >
@@ -85,7 +78,7 @@ export default function Sidebar() {
               className="text-[26px] font-extrabold tracking-tight"
               style={{ fontFamily: "Syne, sans-serif" }}
             >
-              Talent<span className="text-indigo-400">AI</span>
+              Talent<span className="text-secondary">AI</span>
             </h1>
             <p className="text-[11px] text-gray-400 uppercase tracking-wider">
               Recrutement Intelligent
@@ -126,8 +119,8 @@ export default function Sidebar() {
                   className={`flex items-center gap-3 px-5 py-2 border-l-2 transition-all
                   ${
                     isActive(item.href)
-                      ? "bg-indigo-500/10 border-indigo-500 text-indigo-500 font-medium"
-                      : "border-transparent text-gray-400 hover:bg-indigo-500/5 hover:text-indigo-500"
+                      ? "bg-secondary/10 border-secondary text-secondary font-medium"
+                      : "border-transparent text-gray-400 hover:bg-secondary/5 hover:text-secondary"
                   }`}
                 >
                   <Icon size={18} />
@@ -145,7 +138,7 @@ export default function Sidebar() {
       {/* USER */}
       <div className="p-4 border-t border-gray-200 dark:border-white/10">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center text-white text-xs font-bold">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-secondary to-cyan-400 flex items-center justify-center text-white text-xs font-bold">
             SA
           </div>
 
