@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Brief;
 
+use App\Http\Controllers\Controller;
 use App\Enums\BriefStatus;
 use App\Enums\ContractType;
 use App\Enums\GenderPref;
@@ -130,7 +131,7 @@ class BriefController extends Controller
                 [Brief::class]
             );
 
-            return Inertia::render('Briefs/Fallback', [
+            return Inertia::render('Briefs/Create', [
                 'error' => 'Impossible d\'afficher le formulaire de création.',
             ]);
         }
