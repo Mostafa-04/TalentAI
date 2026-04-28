@@ -15,12 +15,13 @@ import {
   PanelLeftOpen
 } from "lucide-react";
 
+
 export default function Sidebar() {
   const { url } = usePage();
   const [collapsed, setCollapsed] = useState(false);
-  const isActive = (href) => {
-    return url === href || url.startsWith(href + "/");
-  };
+    const isActive = (routeName) => {
+      return route().current(routeName);
+    };
 
 
   // MENU SECTIONS
@@ -28,34 +29,27 @@ export default function Sidebar() {
     {
       title: "Tableau de bord",
       items: [
-        { id: "dashboard", label: "Vue d'ensemble", icon: LayoutDashboard, href: "/dashboard" },
+        { id: "dashboard", label: "Vue d'ensemble" , icon: LayoutDashboard, route: "dashboard" },
       ],
     },
     {
       title: "Sourcing",
       items: [
-        { id: "brief", label: "Nouveau brief", icon: FileText, href: "/briefs/create" },
-        { id: "sourcing", label: "Sourcing auto", icon: Search, href: "/sourcing" },
-      ],
-    },
-    {
-      title: "Candidats",
-      items: [
-        { id: "candidates", label: "Base candidats", icon: Users, href: "/candidates" },
-        { id: "ranking", label: "Classements IA", icon: Trophy, href: "/ranking" },
+        { id: "brief", label: "Nouveau brief", icon: FileText, route: "briefs.index" },
+        { id: "sourcing", label: "Sourcing auto", icon: Search, route: "dashboard" },
       ],
     },
     {
       title: "Entretiens",
       items: [
-        { id: "interviews", label: "Entretiens", icon: Mic, href: "/interviews" },
-        { id: "reports", label: "Rapports IA", icon: BarChart3, href: "/reports" },
+        { id: "interviews", label: "Entretiens", icon: Mic, route: "dashboard" },
+        { id: "reports", label: "Rapports IA", icon: BarChart3, route: "dashboard" },
       ],
     },
     {
       title: "Paramètres",
       items: [
-        { id: "settings", label: "Intégrations", icon: Settings, href: "/settings" },
+        { id: "settings", label: "Intégrations", icon: Settings, route: "dashboard" },
       ],
     },
   ];
@@ -111,14 +105,15 @@ export default function Sidebar() {
             {/* ITEMS */}
             {section.items.map((item) => {
               const Icon = item.icon;
+              console.log(item.route);
 
               return (
                 <Link
                   key={item.id}
-                  href={item.href}
+                  href={route(item.route)}
                   className={`flex items-center gap-3 px-5 py-2 border-l-2 transition-all
                   ${
-                    isActive(item.href)
+                    isActive(item.route)
                       ? "bg-secondary/10 border-secondary text-secondary font-medium"
                       : "border-transparent text-gray-400 hover:bg-secondary/5 hover:text-secondary"
                   }`}

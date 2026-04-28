@@ -30,14 +30,7 @@ export default function CreateBrief() {
     function submit(e: React.FormEvent) {
       e.preventDefault();
 
-      post(route("briefs.store"), {
-        onSuccess: () => {
-          console.log("Brief créé avec succès");
-        },
-        onError: (errors) => {
-          console.log(errors);
-        },
-      });
+      post(route("briefs.store"));
     }
 
 const inputClass =
@@ -56,7 +49,7 @@ const inputClass =
         {/* HEADER */}
         <div className="mb-6">
           <p className="text-gray-500 text-xs">Sourcing › Nouveau brief</p>
-          <h1 className="text-2xl font-bold">Créer un brief de recrutement</h1>
+          <h1 className="text-2xl text-secondary font-bold">Créer un brief de recrutement</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm">
             Renseignez les critères · L'IA les utilisera pour analyser les candidats
           </p>
@@ -87,16 +80,12 @@ const inputClass =
                   value={data.sector}
                   onChange={(e) => setData("sector", e.target.value)}
                 />
-
-                {/* <input
-                  className={inputClass}
-                  placeholder="Type contrat"
-                  value={data.contract_type}
-                  onChange={(e) => setData("contract_type", e.target.value)}
-                /> */}
+                              {errors.sector && (
+                  <p className="text-red-500 text-xs">{errors.sector}</p>
+                )}
                 <Select
                   value={data.contract_type}
-                  onChange={(value) => setData("contract_type", value)}
+                  onChange={(value: string) => setData("contract_type", value)}
                   placeholder="Type de contrat"
                   options={[
                     { value: "CDI", label: "CDI" },
@@ -105,6 +94,9 @@ const inputClass =
                     { value: "Stage", label: "Stage" },
                   ]}
                 />
+                              {errors.contract_type && (
+                  <p className="text-red-500 text-xs">{errors.contract_type}</p>
+                )}
 
                 <input
                   className={inputClass}
@@ -112,6 +104,9 @@ const inputClass =
                   value={data.location}
                   onChange={(e) => setData("location", e.target.value)}
                 />
+                              {errors.location && (
+                  <p className="text-red-500 text-xs">{errors.location}</p>
+                )}
 
                 <input
                   className={inputClass}
@@ -119,6 +114,9 @@ const inputClass =
                   value={data.salary_range}
                   onChange={(e) => setData("salary_range", e.target.value)}
                 />
+                              {errors.salary_range && (
+                  <p className="text-red-500 text-xs">{errors.salary_range}</p>
+                )}
               </div>
             </div>
 
@@ -133,6 +131,9 @@ const inputClass =
                   setData("min_experience_years", e.target.value)
                 }
               />
+              {errors.min_experience_years && (
+                <p className="text-red-500 text-xs">{errors.min_experience_years}</p>
+              )}
 
               <input
                 className={`${inputClass} mt-3`}
@@ -140,6 +141,9 @@ const inputClass =
                 value={data.education_level}
                 onChange={(e) => setData("education_level", e.target.value)}
               />
+              {errors.education_level && (
+                <p className="text-red-500 text-xs">{errors.education_level}</p>
+              )}
 
               <input
                 className={`${inputClass} mt-3`}
@@ -147,16 +151,34 @@ const inputClass =
                 value={data.required_skills}
                 onChange={(e) => setData("required_skills", e.target.value)}
               />
+              {errors.required_skills && (
+                <p className="text-red-500 text-xs">{errors.required_skills}</p>
+              )}
 
-              <Select
-                value={data.gender_pref}
-                onChange={(value) => setData("gender_pref", value)}
-                placeholder="Préférence de genre"
-                options={[
-                  { value: "M", label: "Homme" },
-                  { value: "F", label: "Femme" },
-                ]}
-              />
+                <input
+                  className={`${inputClass} mt-3`}
+                  placeholder="Age préféré"
+                  value={data.age_range}
+                  onChange={(e) => setData("age_range", e.target.value)}
+                />
+              {errors.age_range && (
+                <p className="text-red-500 text-xs">{errors.age_range}</p>
+              )}
+
+              <div className="mt-3">
+                  <Select
+                    value={data.gender_pref}
+                    onChange={(value: string) => setData("gender_pref", value)}
+                    placeholder="Préférence de genre"
+                    options={[
+                      { value: "M", label: "Homme" },
+                      { value: "F", label: "Femme" },
+                    ]}
+                  />
+              {errors.gender_pref && (
+                <p className="text-red-500 text-xs">{errors.gender_pref}</p>
+              )}
+              </div>
             </div>
           </div>
 
@@ -174,6 +196,9 @@ const inputClass =
                   setData("mission_description", e.target.value)
                 }
               />
+              {errors.mission_description && (
+                <p className="text-red-500 text-xs">{errors.mission_description}</p>
+              )}
 
               <textarea
                 className={inputClass + " mt-3"}
@@ -181,6 +206,9 @@ const inputClass =
                 value={data.soft_skills}
                 onChange={(e) => setData("soft_skills", e.target.value)}
               />
+              {errors.soft_skills && (
+                <p className="text-red-500 text-xs">{errors.soft_skills}</p>
+              )}
             </div>
 
             {/* SCORING */}
@@ -205,6 +233,9 @@ const inputClass =
                       })
                     }
                   />
+                  {errors.scoring_weights?.[key] && (
+                    <p className="text-red-500 text-xs">{errors.scoring_weights[key]}</p>
+                  )}
                 </div>
               ))}
             </div>
